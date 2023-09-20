@@ -2,6 +2,7 @@ import { parseCSV } from "../logic/utils";
 import UiClass from "../types/e-ui-class";
 import "./style.css";
 import { getElementByClass } from "./utils";
+import styles from '../styles/main-ui.module.css'
 
 export function getRoot(): HTMLElement {
   return document.querySelector<HTMLDivElement>("#app")!;
@@ -31,17 +32,23 @@ export function getCsvInput(): HTMLInputElement {
 
 export function createDom() {
   getRoot().innerHTML = `
-    <div>
-      <h1>handling input in testing library</h1>
-      <label>Insert first number</label><input class=${UiClass.add1} type='number'/>
-      <br/>
-      <label>Insert second number</label><input class=${UiClass.add2} type='number'/>
-      <br/>
-      <button class=${UiClass.add}>Add</button>
-      <br/>
-      <label>Insert csv grade file</label><input class=${UiClass.csvFile} type="file"/>
-      <br/>
-      <output/>
+    <div class=${styles.main_ui}>
+      <div>
+        <h1>Handling input in testing library</h1>
+        <div class=${UiClass.input_part}>
+        <label>Insert first number</label><input class=${UiClass.add1} type='number'/>
+        <br/>
+        <label>Insert second number</label><input class=${UiClass.add2} type='number'/>
+        <br/>
+        <button class=${UiClass.add}>Add</button>
+        </div>
+        <br/>
+        <div class=${UiClass.file_part}>
+        <label>Insert csv grade file</label><input class=${UiClass.csvFile} type="file"/>
+        </div>
+        <br/>
+        <output/>
+      </div>
     </div>
   `;
 }
