@@ -25,7 +25,7 @@ function getOutput(): HTMLElement {
   return getRoot().querySelector("output")!;
 }
 
-function getCsvInput(): HTMLInputElement {
+export function getCsvInput(): HTMLInputElement {
   return getElementByClass(getRoot(), UiClass.csvFile) as HTMLInputElement;
 }
 
@@ -57,7 +57,7 @@ export function registerHandlers() {
   getCsvInput().addEventListener("change", handleFile);
 }
 
-function handleFile(e: Event) {
+export function handleFile(e: Event) {
   const fileInput = e.target as HTMLInputElement;
   const file = fileInput.files![0];
   const reader = new FileReader();
@@ -66,12 +66,10 @@ function handleFile(e: Event) {
     const csvData = event.target!.result as string;
     const grades = parseCSV(csvData);
 
-    if (grades.length > 0) {
-      getOutput().innerText =
-        grades.length > 0
-          ? `number of grades : ${grades.length}`
-          : "No data found in the CSV file.";
-    }
+    const val = grades.length > 0
+    ? `number of grades : ${grades.length}`
+    : "No data found in the CSV file.";  
+    getOutput().innerHTML = `<p>${val}</p>`
   };
 
   reader.readAsText(file);
