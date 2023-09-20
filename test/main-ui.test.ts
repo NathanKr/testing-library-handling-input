@@ -29,8 +29,8 @@ beforeEach(() => {
   initUi();
 });
 
-test("this text exist : handling input in testing library", () => {
-  const elem = getByText(getRoot(), "handling input in testing library");
+test("this text exist : Handling input in testing library", () => {
+  const elem = getByText(getRoot(), "Handling input in testing library");
   expect(elem).toBeTruthy();
 });
 

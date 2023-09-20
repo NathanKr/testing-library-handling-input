@@ -2,7 +2,7 @@ import { parseCSV } from "../logic/utils";
 import UiClass from "../types/e-ui-class";
 import "./style.css";
 import { getElementByClass } from "./utils";
-import styles from '../styles/main-ui.module.css'
+import './main-ui.css'
 
 export function getRoot(): HTMLElement {
   return document.querySelector<HTMLDivElement>("#app")!;
@@ -32,7 +32,7 @@ export function getCsvInput(): HTMLInputElement {
 
 export function createDom() {
   getRoot().innerHTML = `
-    <div class=${styles.main_ui}>
+    <div class=${UiClass.mainUi}>
       <div>
         <h1>Handling input in testing library</h1>
         <div class=${UiClass.input_part}>
