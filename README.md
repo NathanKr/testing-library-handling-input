@@ -19,13 +19,11 @@ test("upload file via input with type element -> number of grades : 3 appears in
   const csvFilePath = `./data/${fileName}`; // -- relative to the project root
   const data = fs.readFileSync(csvFilePath);
  
-  // Create an ArrayBuffer from the binary data (Buffer)
   const fileBits = [data.buffer];
  
   const file = new File(fileBits, fileName);
   const inputElem = getCsvInput();
 
-  // --- This causes the input element to upload
   await userEvent.upload(inputElem, file);
 
   expect(inputElem.files![0]).toBe(file);
@@ -44,7 +42,7 @@ run the test
 npm test
 ```
 
-run the UI
+run the UI (you have grades file under data directory)
 
 ```
 npm run dev
