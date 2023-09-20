@@ -12,7 +12,7 @@ import {
   registerHandlers,
 } from "../src/ui/main-ui";
 import userEvent from "@testing-library/user-event";
-import * as functions from "../src/ui/main-ui";
+import fs from 'fs'
 
 let root: HTMLElement;
 
@@ -23,9 +23,7 @@ function initUi() {
   root = document.querySelector("#app")!;
 }
 
-function resetUi() {
-  document.body.innerHTML = "";
-}
+
 
 beforeEach(() => {
   initUi();
@@ -47,25 +45,23 @@ test("type number is ok", async () => {
   expect(getByRole(root, "status").textContent).toBe("3");
 });
 
-test("load csv data -> number of grades : 3 appears in ui", async () => {
-  // Text data
-  const text = "John Deer , 80\nMike Tyson , 22\nBarak Obama , 100";
-
-  // Encode the text as binary data (UTF-8 encoding)
-  const encoder = new TextEncoder();
-  const textAsBytes = encoder.encode(text);
-
-  // Create an ArrayBuffer from the binary data
-  const fileBits = [textAsBytes.buffer];
-
-  const file = new File(fileBits, "grades.csv");
+test("upload file via input with type element -> number of grades : 3 appears in ui", async () => {
+  const fileName = "grades.csv";
+  const csvFilePath = `./data/${fileName}`; // -- relative to the project root
+  const data = fs.readFileSync(csvFilePath);
+  
+  // Create an ArrayBuffer from the binary data (Buffer)
+  const fileBits = [data.buffer];
+  
+  const file = new File(fileBits, fileName);
   const inputElem = getCsvInput();
 
+  // --- this cause the input element to upload
   await userEvent.upload(inputElem, file);
 
   expect(inputElem.files![0]).toBe(file);
   await waitFor(() => {
-    expect(getByRole(root, "status").textContent).toContain(
+    expect(getByRole(root, "status").textContent).toBe(
       "number of grades : 3"
     );
   });
